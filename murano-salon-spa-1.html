@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Murano Salon & Spa — Elegancia y Belleza en Yopal</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --gold:       #C9A96E;
+      --gold-light: #E8D5B0;
+      --gold-dark:  #A07840;
+      --black:      #0A0A0A;
+      --dark:       #111111;
+      --dark2:      #1A1A1A;
+      --dark3:      #222222;
+      --mid:        #2E2E2E;
+      --muted:      #888888;
+      --light:      #F5F1EB;
+      --white:      #FFFFFF;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Jost', sans-serif;
+
+      --radius: 2px;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background-color: var(--black);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { color: inherit; text-decoration: none; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .gold { color: var(--gold); }
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+      z-index: 0;
+    }
+    .btn:hover::before { transform: scaleX(1); }
+    .btn:hover { color: var(--black); }
+    .btn span { position: relative; z-index: 1; }
+    .btn-solid { background: var(--gold); color: var(--black); }
+    .btn-solid::before { background: var(--gold-dark); }
+
+    .divider { width: 60px; height: 1px; background: var(--gold); margin: 20px 0; }
+    .divider-center { margin: 20px auto; }
+
+    .fade-in { opacity: 0; transform: translateY(28px); animation: fadeUp 0.9s var(--transition) forwards; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.30s; }
+    .delay-3 { animation-delay: 0.45s; }
+
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background var(--transition), padding var(--transition), backdrop-filter var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 18px 48px;
+      border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--white);
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 44px; list-style: none; }
+    .nav-links a {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245, 241, 235, 0.7);
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-book {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 12px 28px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      transition: background var(--transition), color var(--transition);
+    }
+    .nav-book:hover { background: var(--gold); color: var(--black); }
+
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .nav-hamburger span { display: block; width: 24px; height: 1px; background: var(--gold); transition: 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .mobile-nav.open { display: flex; opacity: 1; }
+    .mobile-nav a { font-family: var(--font-display); font-size: 32px; color: var(--light); transition: 0.3s; }
+    .mobile-nav a:hover { color: var(--gold); }
+
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 100px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.1) 40%, rgba(10,10,10,0.75) 100%),
+                  url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663750110574/voLizGoMHyPBDuVI.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 760px; }
+    .hero-tagline { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+    .hero-tagline::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
+    .hero-title { font-family: var(--font-display); font-size: clamp(56px, 8vw, 110px); font-weight: 300; line-height: 0.92; color: var(--white); margin-bottom: 36px; }
+    .hero-title em { font-style: italic; color: var(--gold-light); }
+    .hero-desc { font-size: 14px; font-weight: 300; color: rgba(245, 241, 235, 0.7); max-width: 420px; margin-bottom: 48px; }
+    .hero-ctas { display: flex; gap: 20px; flex-wrap: wrap; }
+
+    #about { background: var(--dark); padding: 120px 0; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-visual { position: relative; height: 560px; }
+    .about-img-main {
+      position: absolute; top: 0; left: 0; width: 75%; height: 85%;
+      background: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663750110574/WUEMKZMnybnxSQTt.png');
+      background-size: cover; background-position: center;
+    }
+    .about-img-accent {
+      position: absolute; bottom: 0; right: 0; width: 55%; height: 55%;
+      background: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663750110574/ZEVaSuKMaUPVGTSg.jpg');
+      background-size: cover; background-position: center;
+      border: 1px solid rgba(201, 169, 110, 0.15);
+    }
+    .about-year-badge {
+      position: absolute; bottom: 28%; left: 68%; transform: translate(-50%, 50%);
+      background: var(--gold); color: var(--black); width: 90px; height: 90px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: var(--font-display); z-index: 3;
+    }
+    .about-year-badge .year-number { font-size: 28px; line-height: 1; }
+    .about-year-badge .year-label { font-family: var(--font-body); font-size: 8px; text-transform: uppercase; margin-top: 4px; }
+    .about-heading { font-family: var(--font-display); font-size: clamp(36px, 4vw, 52px); font-weight: 300; line-height: 1.15; color: var(--white); margin-bottom: 20px; }
+    .about-heading em { font-style: italic; color: var(--gold-light); }
+    .about-body { font-size: 14px; color: var(--muted); margin-bottom: 40px; }
+    .about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding-top: 40px; border-top: 1px solid rgba(201, 169, 110, 0.15); }
+    .stat-number { font-family: var(--font-display); font-size: 40px; color: var(--gold); }
+    .stat-label { font-size: 10px; text-transform: uppercase; color: var(--muted); }
+
+    #services { background: var(--black); padding: 120px 0; }
+    .section-header { text-align: center; margin-bottom: 72px; }
+    .section-heading { font-family: var(--font-display); font-size: clamp(40px, 5vw, 64px); font-weight: 300; color: var(--white); }
+    .section-heading em { font-style: italic; color: var(--gold-light); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(201, 169, 110, 0.1); }
+    .service-card { background: var(--dark); padding: 52px 44px; position: relative; transition: 0.4s; }
+    .service-card:hover { background: var(--dark2); }
+    .service-name { font-family: var(--font-display); font-size: 24px; color: var(--white); margin-bottom: 14px; }
+    .service-desc { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+    .service-price { font-family: var(--font-display); font-size: 18px; color: var(--gold); }
+
+    #gallery { background: var(--dark); padding: 120px 0; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
+    .gallery-item { background: var(--dark3); overflow: hidden; position: relative; }
+    .gallery-item:nth-child(1) { grid-column: span 7; grid-row: span 2; height: 480px; }
+    .gallery-item:nth-child(2) { grid-column: span 5; height: 232px; }
+    .gallery-item:nth-child(3) { grid-column: span 5; height: 232px; }
+    .gallery-item:nth-child(4) { grid-column: span 4; height: 300px; }
+    .gallery-item:nth-child(5) { grid-column: span 4; height: 300px; }
+    .gallery-item:nth-child(6) { grid-column: span 4; height: 300px; }
+    .gallery-item-inner { width: 100%; height: 100%; transition: 0.7s; background-size: cover; background-position: center; }
+    .gallery-item:hover .gallery-item-inner { transform: scale(1.04); }
+
+    #booking { background: var(--black); padding: 120px 0; }
+    .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .booking-heading { font-family: var(--font-display); font-size: clamp(40px, 5vw, 60px); font-weight: 300; color: var(--white); margin-bottom: 20px; }
+    .booking-heading em { font-style: italic; color: var(--gold-light); }
+    .booking-body { font-size: 14px; color: var(--muted); margin-bottom: 40px; }
+
+    #footer { background: var(--black); border-top: 1px solid rgba(201, 169, 110, 0.1); padding: 80px 0 40px; }
+    .footer-main { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+    .footer-brand-name { font-family: var(--font-display); font-size: 28px; color: var(--white); margin-bottom: 16px; }
+    .footer-brand-name span { color: var(--gold); }
+    .footer-tagline { font-size: 12px; color: var(--muted); max-width: 260px; }
+    .footer-col-title { font-size: 10px; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 12px; color: var(--muted); }
+
+    .whatsapp-float {
+      position: fixed; bottom: 32px; right: 32px; z-index: 99;
+      width: 56px; height: 56px; background: #25D366; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35); transition: 0.3s;
+    }
+    .whatsapp-float:hover { transform: scale(1.08); }
+
+    @media (max-width: 1024px) {
+      .container { padding: 0 32px; }
+      .about-grid, .booking-grid { grid-template-columns: 1fr; gap: 56px; }
+      .about-visual { height: 400px; order: -1; }
+      .footer-main { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      #navbar { padding: 20px; }
+      #navbar.scrolled { padding: 14px 20px; }
+      .nav-links, .nav-book { display: none; }
+      .nav-hamburger { display: flex; }
+      #hero { padding-bottom: 60px; min-height: 100svh; }
+      #about, #services, #gallery, #booking { padding: 72px 0; }
+      .about-visual { height: 320px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { padding: 36px 28px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .gallery-item:nth-child(1) { grid-column: span 2; height: 260px; }
+      .gallery-item:nth-child(2),
+      .gallery-item:nth-child(3) { height: 180px; }
+      .gallery-item:nth-child(4),
+      .gallery-item:nth-child(5),
+      .gallery-item:nth-child(6) { height: 180px; }
+      .booking-grid { gap: 40px; }
+      .footer-main { grid-template-columns: 1fr; gap: 36px; }
+      .whatsapp-float { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: clamp(42px, 12vw, 64px); }
+      .hero-ctas { flex-direction: column; gap: 12px; }
+      .btn { width: 100%; justify-content: center; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item:nth-child(1),
+      .gallery-item:nth-child(2),
+      .gallery-item:nth-child(3),
+      .gallery-item:nth-child(4),
+      .gallery-item:nth-child(5),
+      .gallery-item:nth-child(6) { grid-column: span 1; height: 220px; }
+      .about-stats { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .stat-number { font-size: 28px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">MURANO <span>SALON</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">Nosotros</a></li>
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#gallery">Galería</a></li>
+      <li><a href="#booking">Reservar</a></li>
+    </ul>
+    <a href="https://wa.me/573209232803" target="_blank" class="nav-book">Cita WhatsApp</a>
+    <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about">Nosotros</a>
+    <a href="#services">Servicios</a>
+    <a href="#gallery">Galería</a>
+    <a href="#booking">Reservar</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-tagline fade-in">Luxury Salon & Spa Capilar</div>
+        <h1 class="hero-title fade-in delay-1">Tu Belleza,<br><em>Nuestra Pasión</em></h1>
+        <p class="hero-desc fade-in delay-2">Vive la experiencia de lujo en Yopal. Especialistas en color, spa capilar avanzado y bienestar integral para resaltar tu esencia única.</p>
+        <div class="hero-ctas fade-in delay-3">
+          <a href="https://wa.me/573209232803" target="_blank" class="btn btn-solid"><span>Reservar Cita</span></a>
+          <a href="#services" class="btn"><span>Ver Servicios</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <div class="about-img-main"></div>
+          <div class="about-img-accent"></div>
+          <div class="about-year-badge">
+            <span class="year-number">10+</span>
+            <span class="year-label">Años</span>
+          </div>
+        </div>
+        <div class="about-text reveal">
+          <span class="section-label">Nuestra Historia</span>
+          <h2 class="about-heading">Más que un Salón —<br><em>Un Santuario</em></h2>
+          <div class="divider"></div>
+          <p class="about-body">En Murano Salon & Spa, somos el centro de belleza y spa capilar más grande y exclusivo de Yopal. Nuestro equipo de expertos acreditados cuenta con más de una década de trayectoria transformando estilos y cuidando la salud capilar.</p>
+          <p class="about-body">Utilizamos aparatología de última tecnología y productos de la más alta gama para garantizar resultados excepcionales en cada visita.</p>
+          <div class="about-stats">
+            <div><span class="stat-number">1000+</span><span class="stat-label">Clientes</span></div>
+            <div><span class="stat-number">10+</span><span class="stat-label">Años Exp.</span></div>
+            <div><span class="stat-number">100%</span><span class="stat-label">Pasión</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Nuestra Carta</span>
+        <h2 class="section-heading">Servicios <em>Signature</em></h2>
+        <div class="divider divider-center"></div>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <h3 class="service-name">Spa Coreano — Head Spa</h3>
+          <p class="service-desc">Masaje capilar profundo para relajar, mejorar la circulación y fortalecer el cabello. Sesión personalizada con aparatología de última tecnología.</p>
+          <div class="service-price">Sesión Personalizada</div>
+        </div>
+        <div class="service-card reveal">
+          <h3 class="service-name">Terapia Micromist</h3>
+          <p class="service-desc">Vapor inteligente que reconstruye, hidrata y sella tratamientos dentro del cabello, dejándolo más suave, brillante y resistente.</p>
+          <div class="service-price">Sesión Personalizada</div>
+        </div>
+        <div class="service-card reveal">
+          <h3 class="service-name">Servicios de Cabello</h3>
+          <p class="service-desc">Corte de Cabello · Colorimetría (Balayage, Babylights, Mechas Creativas, Color Base, Contourning) · Blower · Diagnóstico Capilar · Peinados para Niñas.</p>
+          <div class="service-price">Consultar</div>
+        </div>
+        <div class="service-card reveal">
+          <h3 class="service-name">Micropigmentación & Pestañas</h3>
+          <p class="service-desc">Lash Lifting · Cejas Powder Brows · Neutralización Labial · Delineado Permanente de Ojos. Precisión en cada trazo con pigmentos que perfeccionan.</p>
+          <div class="service-price">Sesión Personalizada</div>
+        </div>
+        <div class="service-card reveal">
+          <h3 class="service-name">Manicure & Pedicure</h3>
+          <p class="service-desc">Tradicional · Spa · Con Exfoliación · Para Hombre · Esmaltado Semipermanente · Uñas Press-On · Reparación de Uñas · Parafina para Manos.</p>
+          <div class="service-price">Consultar</div>
+        </div>
+        <div class="service-card reveal">
+          <h3 class="service-name">Depilación</h3>
+          <p class="service-desc">Cejas · Bozo · Axilas · Piernas · Bikini. Piel que se siente tan bien como se ve. Sesión personalizada para cada zona.</p>
+          <div class="service-price">Consultar</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Nuestro Trabajo</span>
+        <h2 class="section-heading">El <em>Portfolio</em></h2>
+      </div>
+      <div class="gallery-grid reveal">
+        <div class="gallery-item"><div class="gallery-item-inner" style="background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663750110574/GdbOnYGVdCbgOiNR.jpg')"></div></div>
+        <div class="gallery-item"><div class="gallery-item-inner" style="background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663750110574/ZEVaSuKMaUPVGTSg.jpg')"></div></div>
+        <div class="gallery-item"><div class="gallery-item-inner" style="background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663750110574/wRknNQgLnOdlFMyR.png')"></div></div>
+        <div class="gallery-item"><div class="gallery-item-inner" style="background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663750110574/RtTkKkcZWDiajvVA.jpg')"></div></div>
+        <div class="gallery-item"><div class="gallery-item-inner" style="background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663750110574/WUEMKZMnybnxSQTt.png')"></div></div>
+        <div class="gallery-item"><div class="gallery-item-inner" style="background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663750110574/voLizGoMHyPBDuVI.jpg')"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section id="booking">
+    <div class="container">
+      <div class="booking-grid">
+        <div class="booking-text reveal">
+          <span class="section-label">Agenda tu Cita</span>
+          <h2 class="booking-heading">Reserva tu <em>Momento</em></h2>
+          <p class="booking-body">¿Lista para tu transformación? Chatea con nosotros directamente por WhatsApp para agendar tu cita o recibir una valoración personalizada.</p>
+          <a href="https://wa.me/573209232803" target="_blank" class="btn btn-solid"><span>Agendar por WhatsApp</span></a>
+        </div>
+        <div style="background: var(--dark2); padding: 50px; border: 1px solid rgba(201, 169, 110, 0.1);">
+          <h3 style="font-family: var(--font-display); font-size: 24px; margin-bottom: 20px;">Ubicación & Contacto</h3>
+          <p style="font-size: 14px; color: var(--muted); margin-bottom: 10px;">📍 Carrera 29 #16-119 Local 210, Yopal</p>
+          <p style="font-size: 14px; color: var(--muted); margin-bottom: 10px;">📞 310 - 544 - 0337</p>
+          <p style="font-size: 14px; color: var(--muted); margin-bottom: 20px;">🕒 Lun - Sáb: 8:00 AM - 7:00 PM</p>
+          <div style="width: 100%; height: 200px; background: #222;">
+            <!-- Placeholder for map -->
+            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #444; font-size: 12px; text-transform: uppercase; letter-spacing: 2px;">Mapa de Yopal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <div class="footer-brand-name">MURANO <span>SALON & SPA</span></div>
+          <p class="footer-tagline">El centro de belleza y spa capilar más grande de Yopal. Elegancia y profesionalismo en cada detalle.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Enlaces</div>
+          <ul class="footer-links">
+            <li><a href="#about">Nosotros</a></li>
+            <li><a href="#services">Servicios</a></li>
+            <li><a href="#gallery">Galería</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Horario</div>
+          <ul class="footer-links">
+            <li>Lun - Sáb: 8:00 - 19:00</li>
+            <li>Dom: Cerrado</li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Síguenos</div>
+          <ul class="footer-links">
+            <li><a href="https://instagram.com/muranosalon" target="_blank">@muranosalon</a></li>
+          </ul>
+        </div>
+      </div>
+      <div style="text-align: center; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 11px; color: #444;">
+        &copy; 2026 Murano Salon & Spa. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/573209232803" class="whatsapp-float" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="28px" height="28px">
+      <path fill="#fff" d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"/>
+      <path fill="#25D366" d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z"/>
+      <path fill="#25D366" d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974"/>
+      <path fill="#fff" d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z"/>
+      <path fill="#25D366" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+
+    // Intersection Observer for reveal animations
+    const revealCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    };
+    const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  </script>
+
+</body>
+</html>
